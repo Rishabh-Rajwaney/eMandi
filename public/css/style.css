@@ -1,0 +1,281 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Center page */
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f4f4f9;
+}
+
+/* Card */
+.card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 300px;
+  text-align: center;
+}
+
+/* Heading */
+.card h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+/* Labels + Inputs */
+form label {
+  display: block;
+  margin: 0.5rem 0 0.25rem;
+  text-align: left;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+form input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 0.7rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+/* Links */
+p {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Dashboard Layout */
+.dashboard {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  background: #007bff;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h1 {
+  font-size: 1.5rem;
+}
+
+.header nav a {
+  color: white;
+  margin-left: 1rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.header nav a:hover {
+  text-decoration: underline;
+}
+
+/* Grid for Cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  flex: 1;
+}
+
+/* Reuse card style */
+.card {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.card ul {
+  text-align: left;
+  margin-left: 1rem;
+  color: #444;
+}
+
+.card form label {
+  display: block;
+  margin: 0.5rem 0 0.25rem;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.card form input {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Footer */
+footer {
+  background: #f4f4f9;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Market Page */
+.market {
+  padding: 2rem;
+}
+
+.market h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+/* 4 Crop Cards in Row */
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Crop Cards */
+.crop-card {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.crop-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #007bff;
+}
+
+.crop-card p {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Trend Labels */
+.trend {
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.trend.up {
+  color: green;
+  background: #eafae9;
+}
+
+.trend.down {
+  color: red;
+  background: #fde8e8;
+}
+
+.trend.steady {
+  color: #555;
+  background: #f0f0f0;
+}
+
+/* All Crops Table */
+.all-crops {
+  margin-top: 3rem;
+}
+
+.all-crops h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.all-crops table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.all-crops th, 
+.all-crops td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.all-crops th {
+  background: #007bff;
+  color: white;
+}
+
+.all-crops tr:hover {
+  background: #f9f9f9;
+}
+
+/* Fix header to always stay at top */
+header.header {
+  height: 4rem; /* fixed height for header */
+}
+
+.market {
+  padding-top: calc(4rem + 2rem); /* header height + extra spacing */
+}
+
+
+
+/* Table section background fix */
+.all-crops {
+  margin-top: 3rem;
+  background: #f4f4f9;
+}
+
