@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Price Test</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <h1>FarmerConnect - API Test</h1>
+    <nav>
+      <a href="/home">🏠 Dashboard</a>
+      <a href="/market">📊 Market (Original)</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>🔬 API Test Page</h2>
+    
+    <div class="filter-section">
+      <h3>Test Your API</h3>
+      <form id="testForm">
+        <div class="form-group">
+          <label for="stateInput">State:</label>
+          <input type="text" id="stateInput" placeholder="Enter state">
+        </div>
+        
+        <div class="form-group">
+          <label for="districtInput">District:</label>
+          <input type="text" id="districtInput" placeholder="Enter district">
+        </div>
+        
+        <div class="form-group">
+          <label for="commodityInput">Commodity:</label>
+          <input type="text" id="commodityInput" placeholder="Try: Potato, Wheat, Rice, Onion">
+        </div>
+        
+        <div class="form-group">
+          <label for="marketInput">Market:</label>
+          <input type="text" id="marketInput" placeholder="Enter market">
+        </div>
+        
+        <button type="button" id="searchBtn" class="search-btn">🔍 Search Prices</button>
+        <button type="button" id="loadSampleBtn" class="clear-btn">📊 Load Sample Data</button>
+      </form>
+    </div>
+
+    <div id="avgCard" class="results-section">
+      <h3>Average Prices</h3>
+      <p>Click search to see results</p>
+    </div>
+
+    <div id="result" class="results-section">
+      <h3>Detailed Results</h3>
+      <p>Results will appear here</p>
+    </div>
+  </main>
+
+  <script src="/js/market.js"></script>
+</body>
+</html>

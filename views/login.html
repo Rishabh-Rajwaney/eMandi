@@ -3,19 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
+  <title>Login - FarmerConnect</title>
+<link rel="stylesheet" href="../public/css/style.css">
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h2>Login</h2>
-  <form action="/login" method="POST">
-    <label>Email:</label>
-    <input type="email" name="email" required><br><br>
+  <div class="container" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: var(--space-4);">
+    <div class="card" style="max-width: 400px; width: 100%;">
+      <div class="card-header text-center">
+        <div class="logo" style="justify-content: center; margin-bottom: var(--space-2);">
+          🌾 FarmerConnect
+        </div>
+        <h2 class="card-title">Welcome Back</h2>
+        <p class="card-subtitle">Sign in to your account to continue</p>
+      </div>
+      
+      <div class="card-body">
+        <form action="/login" method="POST" class="fade-in">
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="form-input" 
+              placeholder="Enter your email"
+              required
+            >
+          </div>
 
-    <label>Password:</label>
-    <input type="password" name="password" required><br><br>
+          <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              class="form-input" 
+              placeholder="Enter your password"
+              required
+            >
+          </div>
 
-    <button type="submit">Login</button>
-  </form>
-  <p>Don’t have an account? <a href="/">Register here</a></p>
+          <button type="submit" class="btn btn-primary btn-full btn-lg">
+            <span>🔐</span>
+            Sign In
+          </button>
+        </form>
+      </div>
+      
+      <div class="card-footer text-center">
+        <p style="margin: 0; color: var(--gray-600);">
+          Don't have an account? 
+          <a href="/" class="btn btn-secondary btn-sm" style="display: inline-flex; margin-left: var(--space-2);">
+            Register here
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

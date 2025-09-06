@@ -1,30 +1,15 @@
 const express = require("express");
-const path = require("path");
 const router = express.Router();
+const path = require("path");
 
-// Dashboard
-router.get("/home", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "home.html"));
+// Selling route
+router.get("/selling", (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/selling.html"));
 });
 
-// Live Market Prices
-router.get("/market", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "market.html"));
-});
-
-// Sell Crops
-router.get("/sell", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "sell.html"));
-});
-
-// Buy Crops
-router.get("/buy", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "buy.html"));
-});
-
-// Transaction History
-router.get("/history", (req, res) => {
-  res.sendFile(path.join(__dirname, "../views", "history.html"));
+// Storage route
+router.get("/storage", (req, res) => {
+  res.sendFile(path.join(__dirname, "../views/storage.html"));
 });
 
 module.exports = router;

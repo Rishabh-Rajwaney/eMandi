@@ -3,35 +3,228 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title>
+  <title>Dashboard - Krishi Setu</title>
+  <link rel="stylesheet" href="/css/modern.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
+
+
+
 <body>
   <!-- Header -->
-  <header>
-    <h1>FarmerConnect</h1>
-    <nav>
-      <a href="/home">Dashboard</a> |
-      <a href="/profile">Profile</a> |
-      <a href="/">Logout</a>
-    </nav>
+  <header class="header">
+    <div class="container">
+      <div class="header-content">
+        <a href="/home" class="logo">
+          <h1>🌾</h1>Krishi Setu<h1>🌾</h1>
+        </a>
+        
+        <nav class="nav">
+          <a href="/home" class="nav-link active">Dashboard</a>
+          <a href="/market" class="nav-link">Market</a>
+          <a href="/buy" class="nav-link">Buy</a>
+          <a href="/selling" class="nav-link">Selling</a>
+          <a href="/storage" class="nav-link">Storage</a>
+          <div style="margin-left: 20px; display: inline-block;">
+    <label for="language" style="color: white; margin-right: 5px;">🌐 Language:</label>
+    <select id="language" onchange="changeLanguage()" style="padding: 4px; border-radius: 6px;">
+      <option value="en">English</option>
+      <option value="hi">हिंदी</option>
+    </select>
+  </div>
+          <a href="/" class="nav-link">Logout</a>
+        </nav>
+        
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+          ☰
+        </button>
+      </div>
+      <!-- Weather Sidebar -->
+<div style="position: fixed; top: 80px; right: 20px; width: 250px; 
+            background-color: #e6f2ff; /* Light Blue */
+            border-radius: 12px; padding: 15px; 
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000;">
+  <h3 style="text-align:center; margin-bottom:10px;">🌤️ Weather</h3>
+  <p style="text-align:center; margin:5px 0;">📍 Delhi</p>
+  <p style="text-align:center; margin:5px 0;">🌡️ 32 °C</p>
+  <p style="text-align:center; margin:5px 0;">☁️ Clear Sky</p>
+</div>
+
+</div>
+
+      
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="/home" class="mobile-nav-link active">Dashboard</a>
+        <a href="/market" class="mobile-nav-link">Market</a>
+        <a href="/buy" class="mobile-nav-link">Buy</a>
+        <a href="/selling" class="mobile-nav-link">Selling</a>
+        <a href="/storage" class="mobile-nav-link">Storage</a>
+        <a href="/history" class="mobile-nav-link">History</a>
+        <a href="/profile" class="mobile-nav-link">Profile</a>
+        <a href="/about" class="mobile-nav-link">About</a>
+        <a href="/contact" class="mobile-nav-link">Contact</a>
+        <a href="/privacy" class="mobile-nav-link">Privacy</a>
+        <a href="/terms" class="mobile-nav-link">Terms</a>
+        <a href="/" class="mobile-nav-link">Logout</a>
+        <a href="/weather" class="nav-link">Weather</a>
+
+      </div>
+    </div>
   </header>
 
   <!-- Main Dashboard -->
-  <main>
-    <h2>Welcome to the FarmerConnect Marketplace</h2>
-    <p>Select a feature to continue:</p>
+  <main class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-16);">
+    <div class="text-center mb-8">
+      <h1 class="fade-in">Welcome to 🌾Krishi Setu</h1>
+      <p class="fade-in" style="font-size: var(--font-size-lg); color: var(--gray-600); max-width: 600px; margin: 0 auto;">
+        Your one-stop marketplace for agricultural trading. Connect with farmers, track prices, and grow your business.🌱
+      </p>
+    </div>
 
-    <ul>
-      <li><a href="/market">📊 Live Market Prices</a></li>
-      <li><a href="/sell">🌾 Sell Your Crops</a></li>
-      <li><a href="/buy">🛒 Buy Crops</a></li>
-      <li><a href="/history">📜 Transaction History</a></li>
-    </ul>
+    <div class="dashboard-grid">
+      <a href="/market" class="dashboard-card fade-in">
+        <div class="dashboard-card-icon">📊</div>
+        <h3 class="dashboard-card-title">Live Market Prices</h3>
+        <p class="dashboard-card-description">
+          Get real-time crop prices, market trends, and state-wise averages to make informed decisions.
+        </p>
+      </a>
+
+      <a href="/selling" class="dashboard-card fade-in">
+        <div class="dashboard-card-icon">🌾</div>
+        <h3 class="dashboard-card-title">Selling</h3>
+        <p class="dashboard-card-description">
+          List your crops for sale and connect with buyers easily.
+        </p>
+      </a>
+
+      
+
+
+      <a href="/storage" class="dashboard-card fade-in">
+        <div class="dashboard-card-icon">🏠</div>
+        <h3 class="dashboard-card-title">Storage</h3>
+        <p class="dashboard-card-description">
+          Find storage facilities for your produce and manage stock effectively.
+        </p>
+      </a>
+
+      <a href="/buy" class="dashboard-card fade-in">
+        <div class="dashboard-card-icon">🛒</div>
+        <h3 class="dashboard-card-title">Buy Crops</h3>
+        <p class="dashboard-card-description">
+          Browse and purchase fresh agricultural products directly from farmers.
+        </p>
+      </a>
+      <!-- Transportation Section -->
+<div class="dashboard-card fade-in" style="background-color: #ffffff;">
+  <div class="dashboard-card-icon">🚚</div>
+  <h3 class="dashboard-card-title">Nearby Transport Services</h3>
+  <p class="dashboard-card-description">
+    Contact nearby transporters directly.
+  </p>
+  <ul style="list-style: none; padding-left: 0; margin-top: 10px;">
+    
+  </ul>
+</div>
+
+      <script>
+  function changeLanguage() {
+    const lang = document.getElementById("language").value;
+    if (lang === "hi") {
+      document.querySelector("h1").innerText = "ई- मंडी में आपका स्वागत है";
+      document.querySelector("p").innerText = "कृषि व्यापार के लिए एक ही जगह। किसानों से जुड़ें, कीमतें देखें और अपना व्यापार बढ़ाएं।";
+    } else {
+      document.querySelector("h1").innerText = "Welcome to eMandi";
+      document.querySelector("p").innerText = "Your one-stop marketplace for agricultural trading. Connect with farmers, track prices, and grow your business.";
+    }
+  }
+</script>
+
+      <a href="/history" class="dashboard-card fade-in">
+        <div class="dashboard-card-icon">📜</div>
+        <h3 class="dashboard-card-title">Transaction History</h3>
+        <p class="dashboard-card-description">
+          Track all your buying and selling activities with detailed transaction records.
+        </p>
+      </a>
+    </div>
+
+    <!-- Quick Stats Section -->
+    <div class="card mt-8">
+      <div class="card-header text-center">
+        <h3 class="card-title">Quick Stats</h3>
+        <p class="card-subtitle">Your marketplace overview</p>
+      </div>
+      <div class="grid grid-cols-2" style="gap: var(--space-6);">
+        <div class="text-center">
+          <div style="font-size: var(--font-size-3xl); font-weight: 700; color: var(--primary-color);">0</div>
+          <div style="color: var(--gray-600);">Active Listings</div>
+        </div>
+        <div class="text-center">
+          <div style="font-size: var(--font-size-3xl); font-weight: 700; color: var(--success-color);">₹0</div>
+          <div style="color: var(--gray-600);">Total Sales</div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!-- Footer -->
-  <footer>
-    <p>&copy; 2025 FarmerConnect | SIH Project</p>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div>
+          <p>&copy; 2025 eMandi | SIH Project</p>
+        </div>
+        <div class="footer-links">
+          <a href="/about" class="footer-link">About</a>
+          <a href="/contact" class="footer-link">Contact</a>
+          <a href="/privacy" class="footer-link">Privacy</a>
+          <a href="/terms" class="footer-link">Terms</a>
+        </div>
+      </div>
+    </div>
   </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileMenu.classList.toggle('active');
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+      
+      if (!mobileMenu.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
+        mobileMenu.classList.remove('active');
+      }
+    });
+
+    // Add fade-in animation to cards
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.dashboard-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+  </script>
 </body>
 </html>

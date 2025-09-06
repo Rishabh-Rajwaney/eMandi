@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buy Crops - eMandi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0fff0;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #2e7d32;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5em;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .crop-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s ease;
+    }
+    .crop-card:hover {
+      transform: translateY(-5px);
+    }
+    .crop-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .crop-info {
+      padding: 15px;
+      text-align: center;
+    }
+    .crop-info h3 {
+      margin: 10px 0;
+      font-size: 1.2em;
+    }
+    .price {
+      font-weight: bold;
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+    .buy-btn {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s ease;
+    }
+    .buy-btn:hover {
+      background: #256428;
+    }
+
+    /* Dynamic crops vertical list */
+    #market {
+      margin: 20px;
+    }
+    #market .crop-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #d4f4dd; /* light green */
+      padding: 10px;
+      margin-bottom: 15px; /* space between crops */
+      border-radius: 10px;
+    }
+    #market .crop-card span:first-child {
+      font-size: 24px; /* star emoji bigger */
+      margin-right: 10px;
+    }
+    #market .crop-info {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Clear button styling */
+    #clear-btn {
+      display: block;
+      margin: 10px auto 30px;
+      padding: 10px 20px;
+      background: #e53e3e;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    #clear-btn:hover {
+      background: #c53030;
+    }
+  </style>
+</head>
+<body>
+  <header>🛒 Buy Fresh Crops</header>
+
+  <div class="container">
+    <!-- Static crops -->
+    <div class="crop-card">
+      <img src="https://img500.exportersindia.com/product_images/bc-500/2023/5/11459544/wheat-1684235550-6880674.jpg" alt="Wheat">
+      <div class="crop-info">
+        <h3>Wheat</h3>
+        <div class="price">₹2000 / Quintal</div>
+        <button class="buy-btn" onclick="alert('You bought Wheat! ✅')">Buy Now</button>
+      </div>
+    </div>
+    <div class="crop-card">
+      <img src="https://www.nextechagrisolutions.com/blog/wp-content/uploads/2014/11/Rice-Parts.jpg" alt="Rice">
+      <div class="crop-info">
+        <h3>Rice</h3>
+        <div class="price">₹2500 / Quintal</div>
+        <button class="buy-btn" onclick="alert('You bought Rice! ✅')">Buy Now</button>
+      </div>
+      </div>
+    <div class="crop-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWL-qDgILs9nBllU37MaJGTAetTL1yvkubEg&s" alt="Maize">
+      <div class="crop-info">
+        <h3>Maize</h3>
+        <div class="price">₹1800 / Quintal</div>
+        <button class="buy-btn" onclick="alert('You bought Maize! ✅')">Buy Now</button>
+      </div>
+      </div>
+    <div class="crop-card">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWL-qDgILs9nBllU37MaJGTAetTL1yvkubEg&s" alt="Maize">
+      <div class="crop-info">
+        <h3>Maize</h3>
+        <div class="price">₹1800 / Quintal</div>
+        <button class="buy-btn" onclick="alert('You bought Maize! ✅')">Buy Now</button>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic crops vertical list -->
+  <div id="market"></div>
+
+  <!-- Clear Listings Button -->
+  <button id="clear-btn" onclick="clearListings()">Clear Listings</button>
+
+  <script>
+    function loadMarket() {
+      let listings = JSON.parse(localStorage.getItem("listings")) || [];
+      let marketDiv = document.getElementById("market");
+
+      if (listings.length === 0) {
+        marketDiv.innerHTML = "<p style='padding:10px;'>No crops available from sellers yet.</p>";
+        return;
+      }
+
+      marketDiv.innerHTML = ""; // Purane content ko clear karo
+
+      listings.forEach((item, index) => {
+        let div = document.createElement("div");
+        div.className = "crop-card";
+
+        div.innerHTML = `
+          <span>🌟</span>
+          <div class="crop-info">
+            <span>${item.crop} (${item.quantity || 0} Kg) - ${item.region || 'N/A'}</span>
+            <span class="price">₹${item.price}/Kg</span>
+            <button class="buy-btn" onclick="buyCrop(${index})">Buy</button>
+          </div>
+        `;
+        marketDiv.appendChild(div);
+      });
+    }
+
+    function buyCrop(index) {
+      let listings = JSON.parse(localStorage.getItem("listings")) || [];
+      let crop = listings[index].crop;
+      alert("You bought " + crop + " successfully! ✅");
+    }
+
+    function clearListings() {
+      localStorage.removeItem("listings");
+      alert("All listings cleared!");
+      loadMarket(); // UI turant update
+    }
+
+    loadMarket();
+  </script>
+</body>
+</html>

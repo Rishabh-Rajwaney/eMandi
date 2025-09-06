@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Selling Page</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("https://agrotech.space/wp-content/uploads/2025/07/digital-backbone-india.webp") no-repeat center center/cover;
+      position: relative;
+      color: #1a202c;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(56, 161, 105, 0.6);
+      z-index: 0;
+    }
+
+    .sell-container {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2f855a;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+      display: block;
+      color: #22543d;
+    }
+
+    input, select {
+      padding: 12px;
+      border: 2px solid #38a169;
+      border-radius: 8px;
+      font-size: 16px;
+      width: 100%;
+    }
+
+    button {
+      padding: 14px;
+      background: #38a169;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #2f855a;
+    }
+  </style>
+</head>
+<body>
+  <div class="sell-container">
+    <h1>🌾 Sell Your Crops</h1>
+    <form id="sellForm">
+      <div>
+        <label for="crop">Select Crop</label>
+        <select id="crop" name="crop" required>
+          <option value="">-- Choose a crop --</option>
+          <option value="Wheat">Wheat</option>
+          <option value="Rice">Rice</option>
+          <option value="Corn">Corn</option>
+          <option value="Sugarcane">Sugarcane</option>
+          <option value="Cotton">Cotton</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="quantity">Quantity (in Kg)</label>
+        <input type="number" id="quantity" name="quantity" placeholder="Enter quantity" required>
+      </div>
+
+      <div>
+        <label for="area">Your Area / Village</label>
+        <input type="text" id="area" name="area" placeholder="Enter your area" required>
+      </div>
+
+      <div>
+        <label for="region">Region / State</label>
+        <input type="text" id="region" name="region" placeholder="Enter your region" required>
+      </div>
+
+      <div>
+        <label for="price">Set Price (₹ per Kg)</label>
+        <input type="number" id="price" name="price" placeholder="Enter price per Kg" required>
+      </div>
+
+      <button type="submit">Submit Crop for Sale</button>
+    </form>
+
+    <script>
+      document.getElementById("sellForm").addEventListener("submit", function(e){
+        e.preventDefault();
+
+        // Get values
+        let crop = document.getElementById("crop").value.trim();
+        let price = document.getElementById("price").value.trim();
+        let quantity = document.getElementById("quantity").value.trim();
+        let area = document.getElementById("area").value.trim();
+        let region = document.getElementById("region").value.trim();
+
+        if(!crop || !price || !quantity || !area || !region){
+          alert("Please fill all fields!");
+          return;
+        }
+
+        // Get previous listings
+        let listings = JSON.parse(localStorage.getItem("listings")) || [];
+
+        // Add new
+        listings.push({crop, price, quantity, area, region});
+
+        // Save
+        localStorage.setItem("listings", JSON.stringify(listings));
+
+        // Success alert
+        alert("✅ Crop successfully submitted!");
+
+        // Reset form
+        document.getElementById("sellForm").reset();
+      });
+    </script>
+
+  </div>
+</body>
+</html>
