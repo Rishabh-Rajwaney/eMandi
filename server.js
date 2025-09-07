@@ -80,6 +80,6 @@ app.get("/contact", (req, res) => {
 // });
 
 // -------------- START SERVER --------------
-app.listen(3000, () => {
+app.listen(PORT, () => {
   console.log("✅ Server running at http://localhost:3000");
 });
