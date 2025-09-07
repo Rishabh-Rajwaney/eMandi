@@ -1,16 +1,29 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const path = require("path");
-const app = express();
 
-// Static files (public folder)
-app.use(express.static("public"));
+const authRoutes = require("./routes/auth");
+const homeRoutes = require("./routes/home");
+const apiRoutes = require("./routes/api");
+
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
+
+// Routes
+app.use("/", authRoutes);
+app.use("/", homeRoutes);
+app.use("/api", apiRoutes);
 
 // ---------------- ROUTES ----------------
 
 // Home
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "home.html"));
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "views", "login.html"));
+// });
 
 app.get("/home", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "home.html"));
@@ -57,14 +70,14 @@ app.get("/contact", (req, res) => {
 });
 
 // Privacy
-app.get("/privacy", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "privacy.html"));
-});
+// app.get("/privacy", (req, res) => {
+//   res.sendFile(path.join(__dirname, "views", "privacy.html"));
+// });
 
 // Terms
-app.get("/terms", (req, res) => {
-  res.sendFile(path.join(__dirname, "views", "terms.html"));
-});
+// app.get("/terms", (req, res) => {
+//   res.sendFile(path.join(__dirname, "views", "terms.html"));
+// });
 
 // -------------- START SERVER --------------
 app.listen(3000, () => {

@@ -3,45 +3,354 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Market - eMandi</title>
+  <title>Live Market Prices - Krishi Setu</title>
   <link rel="stylesheet" href="/css/modern.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- Header -->
   <header class="header">
     <div class="container">
-      <a href="/home" class="logo">🌾 eMandi</a>
-      <nav class="nav">
-        <a href="/home">Dashboard</a>
-        <a href="/market" class="active">Market</a>
-        <a href="/buy">Buy</a>
-        <a href="/selling">Selling</a>
-        <a href="/storage">Storage</a>
-        <a href="/history">History</a>
-        <a href="/profile">Profile</a>
-      </nav>
+      <div class="header-content">
+        <a href="/home" class="logo">
+          🌾 Krishi Setu
+        </a>
+        
+        <nav class="nav">
+          <a href="/home" class="nav-link">Dashboard</a>
+          <a href="/market" class="nav-link active">Market</a>
+          <a href="/profile" class="nav-link">Profile</a>
+          <a href="/" class="nav-link">Logout</a>
+        </nav>
+        
+        <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+          ☰
+        </button>
+      </div>
+      
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="/home" class="mobile-nav-link">Dashboard</a>
+        <a href="/market" class="mobile-nav-link active">Market</a>
+        <a href="/profile" class="mobile-nav-link">Profile</a>
+        <a href="/" class="mobile-nav-link">Logout</a>
+      </div>
     </div>
   </header>
 
-  <main class="container" style="padding: 2rem;">
-    <h1>Live Market Prices</h1>
-    <p>Check real-time mandi rates, crop price trends, and compare across different states.</p>
+  <main class="container" style="padding-top: var(--space-8); padding-bottom: var(--space-16);">
+    <div class="text-center mb-8">
+      <h1 class="fade-in">📊 Live Market Prices</h1>
+      <p class="fade-in" style="font-size: var(--font-size-lg); color: var(--gray-600); max-width: 600px; margin: 0 auto;">
+        Get real-time crop prices and state-wise averages to make informed trading decisions.
+      </p>
+    </div>
+    
+    <!-- Filter Form -->
+    <div class="market-filters fade-in">
+      <div class="card-header text-center">
+        <h3 class="card-title">Search Market Prices by State</h3>
+        <p class="card-subtitle">Filter by location, commodity, and market to find the latest prices</p>
+      </div>
+      
+      <form id="marketFilterForm" class="grid grid-cols-1" style="gap: var(--space-4);">
+        <div class="grid grid-cols-1" style="gap: var(--space-4);">
+          <div class="form-group">
+            <label for="state" class="form-label">State</label>
+            <input 
+              type="text" 
+              id="state" 
+              name="state" 
+              class="form-input" 
+              placeholder="Enter state name (e.g., West Bengal, Punjab)"
+            >
+          </div>
+          
+          <div class="form-group">
+            <label for="district" class="form-label">District</label>
+            <input 
+              type="text" 
+              id="district" 
+              name="district" 
+              class="form-input" 
+              placeholder="Enter district name (optional)"
+            >
+          </div>
+          
+          <div class="form-group">
+            <label for="commodity" class="form-label">Commodity</label>
+            <input 
+              type="text" 
+              id="commodity" 
+              name="commodity" 
+              class="form-input" 
+              placeholder="Enter commodity (e.g., Potato, Wheat, Rice)"
+            >
+          </div>
+          
+          <div class="form-group">
+            <label for="market" class="form-label">Market</label>
+            <input 
+              type="text" 
+              id="market" 
+              name="market" 
+              class="form-input" 
+              placeholder="Enter market name (optional)"
+            >
+          </div>
+          
+          <div class="form-group">
+            <label for="limit" class="form-label">Limit (Records)</label>
+            <select id="limit" name="limit" class="form-select">
+              <option value="5">5 records</option>
+              <option value="10">10 records</option>
+              <option value="20" selected>20 records</option>
+              <option value="50">50 records</option>
+              <option value="100">100 records</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="flex flex-wrap" style="gap: var(--space-3);">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <span>🔍</span>
+            Search State Averages
+          </button>
+          <button type="button" id="clearFilters" class="btn btn-secondary btn-lg">
+            <span>🗑️</span>
+            Clear Filters
+          </button>
+        </div>
+      </form>
+    </div>
 
-    <div class="dashboard-grid">
-      <div class="dashboard-card">
-        <h3>Wheat</h3>
-        <p>₹2200 / quintal</p>
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading" style="display: none;">
+      <div class="spinner"></div>
+      <p id="loadingText">Fetching market data...</p>
+    </div>
+
+    <!-- Date Info -->
+    <div id="dateInfo" class="date-info" style="display: none;">
+      <p id="dateText"></p>
+    </div>
+
+    <!-- Results Section -->
+    <div id="resultsSection" class="market-results fade-in" style="display: none;">
+      <div class="card-header text-center">
+        <h3 class="card-title">Market Price Results</h3>
+        <p class="card-subtitle">State-wise average prices per kg</p>
       </div>
-      <div class="dashboard-card">
-        <h3>Rice</h3>
-        <p>₹3100 / quintal</p>
+      <div id="resultsContainer"></div>
+    </div>
+
+    <!-- Error Message -->
+    <div id="errorMessage" class="alert alert-error" style="display: none;">
+      <p id="errorText"></p>
+    </div>
+
+    <!-- Default Static Data (fallback) -->
+    <div id="defaultData" class="card fade-in">
+      <div class="card-header text-center">
+        <h3 class="card-title">Sample Market Prices</h3>
+        <p class="card-subtitle">Use the filters above to search for specific market data</p>
       </div>
-      <div class="dashboard-card">
-        <h3>Sugarcane</h3>
-        <p>₹320 / quintal</p>
+      <div class="card-body">
+        <div class="grid grid-cols-1" style="gap: var(--space-3);">
+          <div class="flex justify-between items-center p-3" style="background: var(--gray-50); border-radius: var(--radius-md);">
+            <span>Wheat</span>
+            <span style="font-weight: 600; color: var(--primary-color);">₹22.00/kg</span>
+          </div>
+          <div class="flex justify-between items-center p-3" style="background: var(--gray-50); border-radius: var(--radius-md);">
+            <span>Rice</span>
+            <span style="font-weight: 600; color: var(--primary-color);">₹32.00/kg</span>
+          </div>
+          <div class="flex justify-between items-center p-3" style="background: var(--gray-50); border-radius: var(--radius-md);">
+            <span>Corn</span>
+            <span style="font-weight: 600; color: var(--primary-color);">₹18.00/kg</span>
+          </div>
+        </div>
       </div>
     </div>
   </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div>
+          <p>&copy; 2025 अन्ना Data | SIH Project</p>
+        </div>
+        <div class="footer-links">
+          <a href="/about" class="footer-link">About</a>
+          <a href="/contact" class="footer-link">Contact</a>
+          <a href="/privacy" class="footer-link">Privacy</a>
+          <a href="/terms" class="footer-link">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu functionality
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobileMenu');
+      mobileMenu.classList.toggle('active');
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+      
+      if (!mobileMenu.contains(event.target) && !mobileMenuToggle.contains(event.target)) {
+        mobileMenu.classList.remove('active');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('marketFilterForm');
+      const loadingIndicator = document.getElementById('loadingIndicator');
+      const loadingText = document.getElementById('loadingText');
+      const dateInfo = document.getElementById('dateInfo');
+      const dateText = document.getElementById('dateText');
+      const resultsSection = document.getElementById('resultsSection');
+      const resultsContainer = document.getElementById('resultsContainer');
+      const errorMessage = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+      const defaultData = document.getElementById('defaultData');
+      const clearBtn = document.getElementById('clearFilters');
+
+      // Form submission handler
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        // Hide previous results and errors
+        resultsSection.style.display = 'none';
+        errorMessage.style.display = 'none';
+        defaultData.style.display = 'none';
+        
+        // Show loading indicator
+        loadingIndicator.style.display = 'block';
+        
+        try {
+          // Get form data
+          const state = document.getElementById('state').value.trim();
+          const district = document.getElementById('district').value.trim();
+          const commodity = document.getElementById('commodity').value.trim();
+          const market = document.getElementById('market').value.trim();
+          const limit = document.getElementById('limit').value;
+          
+          // Build query parameters - only add non-empty values
+          const params = new URLSearchParams();
+          params.append('limit', limit);
+          
+          if (state) params.append('state', state);
+          if (district) params.append('district', district);
+          if (commodity) params.append('commodity', commodity);
+          if (market) params.append('market', market);
+          
+          console.log('🔍 Searching with filters:', { state, district, commodity, market, limit });
+          
+          // Show progress
+          loadingText.textContent = 'Searching for latest data...';
+          
+          // Make API request to the working API endpoint
+          const response = await fetch(`/api/crop-price?${params.toString()}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          const data = await response.json();
+          
+          // Hide loading indicator
+          loadingIndicator.style.display = 'none';
+          
+          if (data.success && data.records && data.records.length > 0) {
+            // Show date info
+            if (data.searchDate) {
+              dateText.textContent = `Data from: ${data.searchDate}`;
+              dateInfo.style.display = 'block';
+            }
+            displayStateAverages(data.records);
+          } else {
+            showError(data.message || 'No data found for the selected filters. Try different combinations.');
+          }
+          
+        } catch (error) {
+          console.error('Error:', error);
+          loadingIndicator.style.display = 'none';
+          showError('Network error. Please try again.');
+        }
+      });
+
+      // Clear filters handler
+      clearBtn.addEventListener('click', function() {
+        form.reset();
+        resultsSection.style.display = 'none';
+        errorMessage.style.display = 'none';
+        dateInfo.style.display = 'none';
+        defaultData.style.display = 'block';
+      });
+
+      // Display state-wise averages
+      function displayStateAverages(records) {
+        if (!records || records.length === 0) {
+          showError('No market data found for the selected filters.');
+          return;
+        }
+
+        // Group by state and calculate averages
+        const stateData = {};
+        
+        records.forEach(record => {
+          const state = record.state || 'Unknown';
+          const pricePerKg = (record.modal_price / 100).toFixed(2); // Convert quintal to kg
+          
+          if (!stateData[state]) {
+            stateData[state] = {
+              totalPrice: 0,
+              count: 0,
+              commodity: record.commodity || 'N/A'
+            };
+          }
+          
+          stateData[state].totalPrice += parseFloat(pricePerKg);
+          stateData[state].count += 1;
+        });
+
+        // Calculate averages and create display
+        let html = '<div class="grid grid-cols-1" style="gap: var(--space-6);">';
+        
+        for (const [state, data] of Object.entries(stateData)) {
+          const averagePrice = (data.totalPrice / data.count).toFixed(2);
+          
+          html += `
+            <div class="state-card">
+              <h3 class="state-card-title">${state}</h3>
+              <div class="state-card-price">₹${averagePrice}</div>
+              <div class="state-card-unit">per kg</div>
+              <div class="state-card-info">
+                <div><strong>Commodity:</strong> ${data.commodity}</div>
+                <div><strong>Records:</strong> ${data.count}</div>
+              </div>
+            </div>
+          `;
+        }
+        
+        html += '</div>';
+        resultsContainer.innerHTML = html;
+        resultsSection.style.display = 'block';
+      }
+
+      // Show error message
+      function showError(message) {
+        errorText.textContent = message;
+        errorMessage.style.display = 'block';
+        defaultData.style.display = 'block';
+      }
+    });
+  </script>
 </body>
 </html>
-
-   
