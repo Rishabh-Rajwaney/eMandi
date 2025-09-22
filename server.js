@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 
+// auth routes
 const authRoutes = require("./routes/auth");
 const homeRoutes = require("./routes/home");
 const apiRoutes = require("./routes/api");
@@ -13,7 +14,7 @@ const PORT = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// Routes
+// Routes call
 app.use("/", authRoutes);
 app.use("/", homeRoutes);
 app.use("/api", apiRoutes);
@@ -25,16 +26,17 @@ app.use("/api", apiRoutes);
 //   res.sendFile(path.join(__dirname, "views", "login.html"));
 // });
 
+//Home page
 app.get("/home", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "home.html"));
 });
 
-// Selling
+// Selling page
 app.get("/selling", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "selling.html"));
 });
 
-// Storage
+// Storage page
 app.get("/storage", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "storage.html"));
 });
@@ -44,7 +46,7 @@ app.get("/market", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "market.html"));
 });
 
-// ✅ Buy Crops
+// Buy Page
 app.get("/buy", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "buy.html"));
 });
