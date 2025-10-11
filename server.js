@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Routes call
-app.use("/", authRoutes);
+// app.use("/", authRoutes);
 app.use("/", homeRoutes);
 app.use("/api", apiRoutes);
 
@@ -27,7 +27,7 @@ app.use("/api", apiRoutes);
 // });
 
 //Home page
-app.get("/home", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "views", "home.html"));
 });
 
